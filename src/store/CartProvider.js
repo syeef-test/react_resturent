@@ -8,6 +8,17 @@ const CartProvider = (props) => {
     console.log(cartContext);
   };
 
+  // const addItemToCartHandler = (newItem) => {
+  //   const existingItem = items.find((item) => item.id === newItem.id);
+  //   if (existingItem) {
+  //     existingItem.quantity += Number(newItem.quantity);
+  //     updateItems([...items]);
+  //   } else {
+  //     updateItems((prevItems) => [...prevItems, newItem]);
+  //   }
+  //   console.log(cartContext);
+  // };
+
   const removeItemFromCartHandler = (id) => {};
 
   const cartContext = {

@@ -12,6 +12,7 @@ const MealItemForm = (props) => {
     cartcntx.addItem({ ...props.items, quantity: quantity });
     console.log(cartcntx);
   };
+
   return (
     <form className={classes.form}>
       {console.log(cartcntx)}
