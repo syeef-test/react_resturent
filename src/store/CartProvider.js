@@ -27,7 +27,28 @@ const CartProvider = (props) => {
     console.log(cartContext);
   };
 
-  const removeItemFromCartHandler = (id) => {};
+  const removeItemFromCartHandler = (id) => {
+    const updatedCartItems = [...items];
+    const existingItemIndex = updatedCartItems.findIndex(
+      (item) => item.id === id
+    );
+
+    if (existingItemIndex !== -1) {
+      let updatedQuantity = updatedCartItems[existingItemIndex].quantity;
+
+      if (updatedQuantity > 1) {
+        updatedQuantity -= 1;
+
+        // update cart
+        updatedCartItems[existingItemIndex].quantity = updatedQuantity;
+      } else {
+        // remove if 1
+        updatedCartItems.splice(existingItemIndex, 1);
+      }
+
+      updateItems(updatedCartItems);
+    }
+  };
 
   const cartContext = {
     items: items,

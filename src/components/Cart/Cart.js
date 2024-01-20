@@ -2,6 +2,7 @@ import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
 import { useContext, useEffect, useState } from "react";
+import Input from "../UI/Input";
 
 const Cart = (props) => {
   const cartcntx = useContext(CartContext);
@@ -19,11 +20,21 @@ const Cart = (props) => {
     mergeTotalAmount();
   }, [cartcntx.items]);
 
+  const increaseQuantityHandler = (item) => {
+    cartcntx.addItem({ item, quantity: 1 });
+  };
+
+  const decreaseQuantityHandler = (id) => {
+    cartcntx.removeItem(id);
+  };
+
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {cartcntx.items.map((item) => (
         <li key={item.id}>
           Name:{item.name} Price:{item.price} Quantity:{item.quantity}
+          <button onClick={() => increaseQuantityHandler(item)}>+</button>
+          <button onClick={() => decreaseQuantityHandler(item.id)}>-</button>
         </li>
       ))}
     </ul>
@@ -32,6 +43,7 @@ const Cart = (props) => {
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
+
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
