@@ -3,19 +3,16 @@ import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
   const [items, updateItems] = useState([]);
-  // const addItemToCartHandler = (item) => {
-  //   updateItems([...items, item]);
-  //   console.log(cartContext);
-  // };
 
   const addItemToCartHandler = (newItem) => {
+    console.log(newItem);
     const existingItemIndex = items.findIndex(
       (item) => item.name === newItem.name
     );
 
     if (existingItemIndex !== -1) {
       //update allready exist order
-      const updatedCartItems = [...items];
+      let updatedCartItems = [...items];
       updatedCartItems[existingItemIndex].quantity =
         Number(updatedCartItems[existingItemIndex].quantity) +
         Number(newItem.quantity);
@@ -24,7 +21,23 @@ const CartProvider = (props) => {
       //new order simply insert data
       updateItems((items) => [...items, newItem]);
     }
-    console.log(cartContext);
+  };
+
+  const addItemToCartByOneHandler = (newItem) => {
+    const existingItemIndex = items.findIndex(
+      (item) => item.name === newItem.name
+    );
+
+    if (existingItemIndex !== -1) {
+      //update allready exist order
+      let updatedCartItems = [...items];
+      updatedCartItems[existingItemIndex].quantity =
+        Number(updatedCartItems[existingItemIndex].quantity) + 1;
+      updateItems(updatedCartItems);
+    } else {
+      //new order simply insert data
+      updateItems((items) => [...items, newItem]);
+    }
   };
 
   const removeItemFromCartHandler = (id) => {
@@ -55,6 +68,7 @@ const CartProvider = (props) => {
     totalAmount: 0,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    addItemByOne: addItemToCartByOneHandler,
   };
 
   return (

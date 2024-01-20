@@ -2,7 +2,6 @@ import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
 import { useContext, useEffect, useState } from "react";
-import Input from "../UI/Input";
 
 const Cart = (props) => {
   const cartcntx = useContext(CartContext);
@@ -21,11 +20,13 @@ const Cart = (props) => {
   }, [cartcntx.items]);
 
   const increaseQuantityHandler = (item) => {
-    cartcntx.addItem({ item, quantity: 1 });
+    console.log(item);
+
+    cartcntx.addItemByOne(item);
   };
 
-  const decreaseQuantityHandler = (id) => {
-    cartcntx.removeItem(id);
+  const decreaseQuantityHandler = (item) => {
+    cartcntx.removeItem(item.id);
   };
 
   const cartItems = (
@@ -34,7 +35,7 @@ const Cart = (props) => {
         <li key={item.id}>
           Name:{item.name} Price:{item.price} Quantity:{item.quantity}
           <button onClick={() => increaseQuantityHandler(item)}>+</button>
-          <button onClick={() => decreaseQuantityHandler(item.id)}>-</button>
+          <button onClick={() => decreaseQuantityHandler(item)}>-</button>
         </li>
       ))}
     </ul>
