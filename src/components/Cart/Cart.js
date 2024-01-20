@@ -10,10 +10,10 @@ const Cart = (props) => {
   useEffect(() => {
     const mergeTotalAmount = () => {
       const newTotalAmount = cartcntx.items.reduce(
-        (total, item) => total + item.price * item.quantity,
+        (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
-      setTotalAmount(newTotalAmount);
+      setTotalAmount(newTotalAmount.toFixed(2));
     };
 
     mergeTotalAmount();
@@ -22,7 +22,7 @@ const Cart = (props) => {
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {cartcntx.items.map((item) => (
-        <li>
+        <li key={item.id}>
           Name:{item.name} Price:{item.price} Quantity:{item.quantity}
         </li>
       ))}
