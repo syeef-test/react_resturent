@@ -10,7 +10,7 @@ const MealItemForm = (props) => {
   const handleInputChange = (event) => {
     // positive
     const enteredValue = event.target.value;
-    if (!enteredValue || enteredValue <= 0 || enteredValue % 1 !== 0) {
+    if (!enteredValue || enteredValue <= 0) {
       return;
     }
     setQuantity(Number(enteredValue));
@@ -18,7 +18,7 @@ const MealItemForm = (props) => {
 
   const addItemToCart = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
+    // console.log(event.target.value);
     //const quantity = document.getElementById("amount_" + props.id).value;
     cartcntx.addItem({ ...props.items, quantity: quantity });
   };

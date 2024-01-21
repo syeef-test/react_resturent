@@ -4,36 +4,35 @@ import CartContext from "../../store/cart-context";
 import { useContext, useEffect, useState } from "react";
 
 const Cart = (props) => {
-  const cartcntx = useContext(CartContext);
+  const cartContext = useContext(CartContext);
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    const mergeTotalAmount = () => {
-      const newTotalAmount = cartcntx.items.reduce(
+    const calculateTotalAmount = () => {
+      const newTotalAmount = cartContext.items.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
       setTotalAmount(newTotalAmount.toFixed(2));
     };
 
-    mergeTotalAmount();
-  }, [cartcntx.items]);
+    calculateTotalAmount();
+  }, [cartContext.items]);
 
   const increaseQuantityHandler = (item) => {
-    console.log(item);
-
-    cartcntx.addItemByOne(item);
+    cartContext.addItemByOne(item);
   };
 
   const decreaseQuantityHandler = (item) => {
-    cartcntx.removeItem(item.id);
+    //console.log(item);
+    cartContext.removeItem(item);
   };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
-      {cartcntx.items.map((item) => (
+      {cartContext.items.map((item) => (
         <li key={item.id}>
-          Name:{item.name} Price:{item.price} Quantity:{item.quantity}
+          Name: {item.name} Price: {item.price} Quantity: {item.quantity}
           <button onClick={() => increaseQuantityHandler(item)}>+</button>
           <button onClick={() => decreaseQuantityHandler(item)}>-</button>
         </li>

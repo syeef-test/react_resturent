@@ -5,7 +5,7 @@ const CartProvider = (props) => {
   const [items, updateItems] = useState([]);
 
   const addItemToCartHandler = (newItem) => {
-    console.log(newItem);
+    // console.log(newItem);
     const existingItemIndex = items.findIndex(
       (item) => item.name === newItem.name
     );
@@ -27,10 +27,11 @@ const CartProvider = (props) => {
     const existingItemIndex = items.findIndex(
       (item) => item.name === newItem.name
     );
+    let updatedCartItems = [...items];
 
     if (existingItemIndex !== -1) {
       //update allready exist order
-      let updatedCartItems = [...items];
+
       updatedCartItems[existingItemIndex].quantity =
         Number(updatedCartItems[existingItemIndex].quantity) + 1;
       updateItems(updatedCartItems);
@@ -40,11 +41,14 @@ const CartProvider = (props) => {
     }
   };
 
-  const removeItemFromCartHandler = (id) => {
+  const removeItemFromCartHandler = (newItem) => {
     const updatedCartItems = [...items];
-    const existingItemIndex = updatedCartItems.findIndex(
-      (item) => item.id === id
+
+    const existingItemIndex = items.findIndex(
+      (item) => item.name === newItem.name
     );
+
+    // console.log("remove id", existingItemIndex);
 
     if (existingItemIndex !== -1) {
       let updatedQuantity = updatedCartItems[existingItemIndex].quantity;
@@ -52,14 +56,21 @@ const CartProvider = (props) => {
       if (updatedQuantity > 1) {
         updatedQuantity -= 1;
 
-        // update cart
-        updatedCartItems[existingItemIndex].quantity = updatedQuantity;
-      } else {
-        // remove if 1
-        updatedCartItems.splice(existingItemIndex, 1);
-      }
+        // new array with the modified item
+        const updatedItems = [...updatedCartItems];
+        updatedItems[existingItemIndex].quantity = updatedQuantity;
 
-      updateItems(updatedCartItems);
+        // console.log(updatedItems);
+        updateItems(updatedItems);
+      } else {
+        // new array without the removed item
+        const updatedItems = updatedCartItems.filter(
+          (_, index) => index !== existingItemIndex
+        );
+        // console.log(updatedItems);
+
+        updateItems(updatedItems);
+      }
     }
   };
 
